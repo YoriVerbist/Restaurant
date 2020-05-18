@@ -8,7 +8,7 @@ public class Zaalpersoneel extends Personeel {
     }
 
     @Override
-    public void update(IngangTeller teller) {
-        System.out.println("Ik ben " + this.getNaam() + " en ga het nodige doen om voor " + teller.getAantal() + " klanten een tafel klaar te maken.");
+    public void update() {
+        System.out.println("Ik ben " + this.getNaam() + " en ga het nodige doen om voor " + IngangTeller.getInstance().getAantal() + " klanten een tafel klaar te maken.");
     }
 }

@@ -112,84 +112,84 @@ class RestaurantAppApplicationTests {
 
     }
 //
-//    @Test
-//    public void d_testStrategyPatternZonderBetaalStrategie_1(){
-//        //gerechten aanmaken
-//        Gerecht videe = new Gerecht();
-//        videe.setNaam("Vidée met frietjes");
-//        videe.setActuelePrijs(15.0);
-//        Gerecht croque = new Gerecht();
-//        croque.setNaam("Croque Monsieur");
-//        croque.setActuelePrijs(10.0);
-//
-//        //maak bestelling met bestelitems
-//        Bestelling bestelling = new Bestelling();
-//        //NORMAAL
-//        bestelling.setDatum(new GregorianCalendar());
-//        bestelling.addItem(videe, 2);
-//        bestelling.addItem(croque, 3);
-//        assertEquals(60.0,bestelling.getTotaal(),0.1);
-//
-//
-//    }
-//    @Test
-//    public void e_testStrategyPatternMetBetaalStrategie_2(){
-//        HappyHourBetaling happyHourBetaling = new HappyHourBetaling();
-//        NormaleBetaling normaleBetaling = new NormaleBetaling();
-//        //gerechten aanmaken
-//        Gerecht videe = new Gerecht();
-//        videe.setNaam("Vidée met frietjes");
-//        videe.setActuelePrijs(15.0);
-//        Gerecht croque = new Gerecht();
-//        croque.setNaam("Croque Monsieur");
-//        croque.setActuelePrijs(10.0);
-//
-//        //maak bestelling met bestelitems
-//        Bestelling bestelling = new Bestelling();
-//        //NORMAAL
-//        bestelling.setBetaalStrategie(normaleBetaling);
-//        bestelling.setDatum(new GregorianCalendar());
-//        bestelling.addItem(videe, 2);
-//        bestelling.addItem(croque, 3);
-//
-//        //HAPPYHOUR
-//        bestelling.setBetaalStrategie(happyHourBetaling);
-//        bestelling.addItem(videe, 5);
-//        bestelling.addItem(croque, 1);
-//
-//        //NORMAAL
-//        bestelling.setBetaalStrategie(normaleBetaling);
-//        bestelling.addItem(videe, 2);
-//        bestelling.addItem(croque, 2);
-//
-//        assertEquals(178.0,bestelling.getTotaal(),0.1);
-//
-//
-//    }
-//    @Test
-//    public void f_testStrategyPatternMetBetaalStrategie_3(){
-//        HappyHourBetaling happyHourBetaling = new HappyHourBetaling();
-//        NormaleBetaling normaleBetaling = new NormaleBetaling();
-//        //gerechten aanmaken
-//        Gerecht videe = new Gerecht();
-//        videe.setNaam("Vidée met frietjes");
-//        videe.setActuelePrijs(15.0);
-//        Gerecht croque = new Gerecht();
-//        croque.setNaam("Croque Monsieur");
-//        croque.setActuelePrijs(10.0);
-//        //maak bestelling met bestelitems
-//        Bestelling bestelling = new Bestelling();
-//        //HAPPYHOUR
-//        bestelling.setBetaalStrategie(happyHourBetaling);
-//        bestelling.addItem(videe, 5);
-//        bestelling.addItem(croque, 6);
-//        //NORMAAL
-//        bestelling.setBetaalStrategie(normaleBetaling);
-//        bestelling.addItem(videe, 2);
-//        bestelling.addItem(croque, 3);
-//
-//        assertEquals(168.0,bestelling.getTotaal(),0.1);
-//    }
+    @Test
+    public void d_testStrategyPatternZonderBetaalStrategie_1(){
+        //gerechten aanmaken
+        Gerecht videe = new Gerecht();
+        videe.setNaam("Vidée met frietjes");
+        videe.setActuelePrijs(15.0);
+        Gerecht croque = new Gerecht();
+        croque.setNaam("Croque Monsieur");
+        croque.setActuelePrijs(10.0);
+
+        //maak bestelling met bestelitems
+        Bestelling bestelling = new Bestelling();
+        //NORMAAL
+        bestelling.setDatum(new GregorianCalendar());
+        bestelling.addItem(videe, 2);
+        bestelling.addItem(croque, 3);
+        assertEquals(60.0,bestelling.getTotaal(),0.1);
+
+
+    }
+    @Test
+    public void e_testStrategyPatternMetBetaalStrategie_2(){
+        HappyHourBetaling happyHourBetaling = new HappyHourBetaling();
+        NormaleBetaling normaleBetaling = new NormaleBetaling();
+        //gerechten aanmaken
+        Gerecht videe = new Gerecht();
+        videe.setNaam("Vidée met frietjes");
+        videe.setActuelePrijs(15.0);
+        Gerecht croque = new Gerecht();
+        croque.setNaam("Croque Monsieur");
+        croque.setActuelePrijs(10.0);
+
+        //maak bestelling met bestelitems
+        Bestelling bestelling = new Bestelling();
+        //NORMAAL
+        bestelling.setBetaalStrategie(normaleBetaling);
+        bestelling.setDatum(new GregorianCalendar());
+        bestelling.addItem(videe, 2);
+        bestelling.addItem(croque, 3);
+
+        //HAPPYHOUR
+        bestelling.setBetaalStrategie(happyHourBetaling);
+        bestelling.addItem(videe, 5);
+        bestelling.addItem(croque, 1);
+
+        //NORMAAL
+        bestelling.setBetaalStrategie(normaleBetaling);
+        bestelling.addItem(videe, 2);
+        bestelling.addItem(croque, 2);
+
+        assertEquals(178.0,bestelling.getTotaal(),0.1);
+
+
+    }
+    @Test
+    public void f_testStrategyPatternMetBetaalStrategie_3(){
+        HappyHourBetaling happyHourBetaling = new HappyHourBetaling();
+        NormaleBetaling normaleBetaling = new NormaleBetaling();
+        //gerechten aanmaken
+        Gerecht videe = new Gerecht();
+        videe.setNaam("Vidée met frietjes");
+        videe.setActuelePrijs(15.0);
+        Gerecht croque = new Gerecht();
+        croque.setNaam("Croque Monsieur");
+        croque.setActuelePrijs(10.0);
+        //maak bestelling met bestelitems
+        Bestelling bestelling = new Bestelling();
+        //HAPPYHOUR
+        bestelling.setBetaalStrategie(happyHourBetaling);
+        bestelling.addItem(videe, 5);
+        bestelling.addItem(croque, 6);
+        //NORMAAL
+        bestelling.setBetaalStrategie(normaleBetaling);
+        bestelling.addItem(videe, 2);
+        bestelling.addItem(croque, 3);
+
+        assertEquals(168.0,bestelling.getTotaal(),0.1);
+    }
 //
 //    @Test
 //    public void g_testDecoratorPattern_Zaal_Admin_1(){

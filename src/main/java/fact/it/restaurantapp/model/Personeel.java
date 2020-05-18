@@ -32,5 +32,5 @@ public abstract class Personeel {
         this.naam = naam;
     }
 
-    public abstract void update(IngangTeller teller);
+    public abstract void update();
 }

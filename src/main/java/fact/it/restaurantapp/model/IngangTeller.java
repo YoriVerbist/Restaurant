@@ -42,7 +42,7 @@ public class IngangTeller extends Subject {
     @Override
     public void notifyObservers() {
         for (Personeel observer: observers) {
-            observer.update(this);
+            observer.update();
         }
     }
 }

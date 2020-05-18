@@ -17,10 +17,14 @@ public class Bestelling {
     @ManyToOne
     private Tafel tafel;
 
+    @Transient
+    private BetaalStrategie betaalStrategie;
+
     @OneToMany(mappedBy = "bestelling")
     private List<BesteldItem> besteldItems = new ArrayList<>();
 
     public Bestelling() {
+        betaalStrategie = new NormaleBetaling();
     }
 
     public Long getId() {
@@ -61,5 +65,30 @@ public class Bestelling {
 
     public void setBesteldItems(List<BesteldItem> besteldItems) {
         this.besteldItems = besteldItems;
+    }
+
+    public BetaalStrategie getBetaalStrategie() {
+        return betaalStrategie;
+    }
+
+    public void setBetaalStrategie(BetaalStrategie betaalStrategie) {
+        this.betaalStrategie = betaalStrategie;
+    }
+
+    public void addItem(Gerecht gerecht, int aantal) {
+        BesteldItem item = new BesteldItem();
+        item.setGerecht(gerecht);
+        item.setAantal(aantal);
+        item.setBestelling(this);
+        item.setToegepastePrijs(this.getBetaalStrategie().getToegepastePrijs(gerecht.getActuelePrijs()));
+        besteldItems.add(item);
+    }
+
+    public double getTotaal() {
+        double sum = 0;
+        for (BesteldItem besteldItem: besteldItems) {
+            sum += besteldItem.getToegepastePrijs() * besteldItem.getAantal();
+        }
+        return sum;
     }
 }

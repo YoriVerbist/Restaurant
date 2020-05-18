@@ -8,7 +8,7 @@ public class Keukenpersoneel extends Personeel {
     }
 
     @Override
-    public void update(IngangTeller teller) {
-        System.out.println("Ik ben " + this.getNaam() + " en ik begin onmiddellijk met het maken van " + teller.getAantal() + " amuse-gueules!");
+    public void update() {
+        System.out.println("Ik ben " + this.getNaam() + " en ik begin onmiddellijk met het maken van " + IngangTeller.getInstance().getAantal() + " amuse-gueules!");
     }
 }
