@@ -17,6 +17,9 @@ public class Bestelling {
     @ManyToOne
     private Tafel tafel;
 
+    @ManyToOne
+    private Zaalpersoneel zaalpersoneel;
+
     @Transient
     private BetaalStrategie betaalStrategie;
 
