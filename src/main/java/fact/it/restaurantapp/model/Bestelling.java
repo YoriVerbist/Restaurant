@@ -27,7 +27,7 @@ public class Bestelling {
     private List<BesteldItem> besteldItems = new ArrayList<>();
 
     public Bestelling() {
-        betaalStrategie = new NormaleBetaling();
+        this.betaalStrategie = new NormaleBetaling();
     }
 
     public Long getId() {
