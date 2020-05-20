@@ -3,6 +3,7 @@ package fact.it.restaurantapp.model;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 @Entity
@@ -11,7 +12,7 @@ public class Bestelling {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Calendar datum;
+    private GregorianCalendar datum;
     private boolean betaald;
 
     @ManyToOne
@@ -38,11 +39,11 @@ public class Bestelling {
         this.id = id;
     }
 
-    public Calendar getDatum() {
+    public GregorianCalendar getDatum() {
         return datum;
     }
 
-    public void setDatum(Calendar datum) {
+    public void setDatum(GregorianCalendar datum) {
         this.datum = datum;
     }
 

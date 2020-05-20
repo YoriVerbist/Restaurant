@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<div class="container jumbotron">
+    <div>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Datum</th>
+                <th scope="col">Betaald</th>
+                <th scope="col">Naam verantwoordelijke</th>
+                <th scope="col">Code tafel</th>
+                <th scope="col">Totaal</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bestelling: ${bestellingList}">
+                <td th:text="${ bestelling.getDatum().toZonedDateTime().getDayOfMonth()} + '/' + ${ bestelling.getDatum().toZonedDateTime().getMonthValue()} "></td>
+                <td th:text="${bestelling.isBetaald()}"></td>
+                <td th:text="${bestelling.getZaalpersoneel().getNaam()}"></td>
+                <td th:text="${bestelling.getTafel().getCode()}"></td>
+                <td th:text="${bestelling.getTotaal()}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 @Controller
 public class StartController {
@@ -57,7 +58,7 @@ public class StartController {
             Bestelling bestelling = new Bestelling();
             bestelling.setTafel(tafel);
             bestelling.setBetaald(i % 2 == 0);
-            bestelling.setDatum(Calendar.getInstance());
+            bestelling.setDatum((GregorianCalendar) GregorianCalendar.getInstance());
             bestelling.setZaalpersoneel(zaalpersoneel);
             bestelling.addItem(gerecht, 1);
             bestellingRepository.save(bestelling);
