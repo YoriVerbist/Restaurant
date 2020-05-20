@@ -2,7 +2,6 @@ package fact.it.restaurantapp.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -87,6 +86,11 @@ public class Bestelling {
         this.zaalpersoneel = zaalpersoneel;
     }
 
+    public String deftigeDatum() {
+        String string = datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH) + "-" + datum.get(GregorianCalendar.YEAR);
+        return string;
+    }
+
     public void addItem(Gerecht gerecht, int aantal) {
         BesteldItem item = new BesteldItem();
         item.setGerecht(gerecht);
@@ -98,7 +102,7 @@ public class Bestelling {
 
     public double getTotaal() {
         double sum = 0;
-        for (BesteldItem besteldItem: besteldItems) {
+        for (BesteldItem besteldItem : besteldItems) {
             sum += besteldItem.getToegepastePrijs() * besteldItem.getAantal();
         }
         return sum;

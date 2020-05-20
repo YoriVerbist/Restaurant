@@ -20,7 +20,7 @@
             </thead>
             <tbody>
             <tr th:each="bestelling: ${bestellingList}">
-                <td th:text="${ bestelling.getDatum().toZonedDateTime().getDayOfMonth()} + '/' + ${ bestelling.getDatum().toZonedDateTime().getMonthValue()} "></td>
+                <td th:text="${bestelling.deftigeDatum()}"></td>
                 <td th:text="${bestelling.isBetaald()}"></td>
                 <td th:text="${bestelling.getZaalpersoneel().getNaam()}"></td>
                 <td th:text="${bestelling.getTafel().getCode()}"></td>

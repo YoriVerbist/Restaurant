@@ -30,21 +30,21 @@ public class BestellingController {
         return "bestelling/zoeken";
     }
 
-    @RequestMapping(value = "/zoekenIndex", method = RequestMethod.POST)
-    public String zoekenIndex(HttpServletRequest request, Model model) {
-        String code = request.getParameter("tafel");
-        String date = request.getParameter("datum");
-        String total = request.getParameter("totaal");
-
-        if (code != null) {
-            List<Bestelling> bestellings = bestellingRepository.findAllByTafelCodeIsLike(code);
-        }
-        else if (date != null) {
-            List<Bestelling> bestellings = bestellingRepository.findAllByDatumContaining(date);
-        }
-        else if (total != null) {
-            List<Bestelling> bestellings = bestellingRepository.findAllByTotaalEquals(Double.parseDouble(total));
-        }
-        return "bestellingen/index";
-    }
+//    @RequestMapping(value = "/zoekenIndex", method = RequestMethod.POST)
+//    public String zoekenIndex(HttpServletRequest request, Model model) {
+//        String code = request.getParameter("tafel");
+//        String date = request.getParameter("datum");
+//        String total = request.getParameter("totaal");
+//
+//        if (code != null) {
+//            List<Bestelling> bestellings = bestellingRepository.findAllByTafelCodeIsLike(code);
+//        }
+//        else if (date != null) {
+//            List<Bestelling> bestellings = bestellingRepository.findAllByDatumContaining(date);
+//        }
+//        else if (total != null) {
+//            List<Bestelling> bestellings = bestellingRepository.findAllByTotaalEquals(Double.parseDouble(total));
+//        }
+//        return "bestellingen/index";
+//    }
 }
