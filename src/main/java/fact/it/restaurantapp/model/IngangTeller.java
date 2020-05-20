@@ -1,13 +1,12 @@
 package fact.it.restaurantapp.model;
 
-import org.springframework.objenesis.ObjenesisSerializer;
-
 public class IngangTeller extends Subject {
 
     private static IngangTeller instance;
     private int aantal;
 
-    private IngangTeller() { }
+    private IngangTeller() {
+    }
 
     public static IngangTeller getInstance() {
         if (instance == null) {
@@ -41,7 +40,7 @@ public class IngangTeller extends Subject {
 
     @Override
     public void notifyObservers() {
-        for (Personeel observer: observers) {
+        for (Personeel observer : observers) {
             observer.update();
         }
     }

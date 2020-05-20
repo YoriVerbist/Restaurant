@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org/%22%3E">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
+<div class="container jumbotron">
+
+
 <p>
 
 </p>
@@ -24,5 +28,26 @@
     </p>
 
 </form>
+<div th:if="${loaded}==null">
+    <form action="/">
+        <p >
+            <input type="submit" name="opvullen" id="opvullen" value="opvullen">
+        </p>
+    </form>
+</div>
+
+<div th:if="${loaded}">
+    <p th:text="${gegevens}"></p>
+    <form action="/personeel">
+        <button type="submit" value="manage" name="action">Personeel beheren</button>
+    </form>
+
+    <form action="/bestellingen">
+        <button type="submit" value="manage" name="action">Bestellingen beheren</button>
+    </form>
+
+
+</div>
+</div>
 </body>
 </html>

@@ -23,11 +23,11 @@ public class Bestelling {
     @Transient
     private BetaalStrategie betaalStrategie;
 
-    @OneToMany(mappedBy = "bestelling")
+    @OneToMany(mappedBy = "bestelling", cascade = {CascadeType.PERSIST})
     private List<BesteldItem> besteldItems = new ArrayList<>();
 
     public Bestelling() {
-        this.betaalStrategie = new NormaleBetaling();
+        betaalStrategie = new NormaleBetaling();
     }
 
     public Long getId() {
@@ -76,6 +76,14 @@ public class Bestelling {
 
     public void setBetaalStrategie(BetaalStrategie betaalStrategie) {
         this.betaalStrategie = betaalStrategie;
+    }
+
+    public Zaalpersoneel getZaalpersoneel() {
+        return zaalpersoneel;
+    }
+
+    public void setZaalpersoneel(Zaalpersoneel zaalpersoneel) {
+        this.zaalpersoneel = zaalpersoneel;
     }
 
     public void addItem(Gerecht gerecht, int aantal) {
