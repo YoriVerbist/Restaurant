@@ -125,13 +125,16 @@ public class BestellingController {
         String datum = request.getParameter("datum");
         try {
             Bestelling bestelling = new Bestelling();
-            bestelling.setBetaald(false);
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             Date parsed = dateFormat.parse(datum);
             GregorianCalendar bestellingDatum = (GregorianCalendar) GregorianCalendar.getInstance();
             bestellingDatum.setTime(parsed);
             bestelling.setDatum(bestellingDatum);
+
+            if (request.getParameter("betaald") != null) {
+                bestelling.setBetaald(true);
+            }
 
             if (zaalpersoneel.isPresent() && zaalpersoneel.get() instanceof Zaalpersoneel) {
                 bestelling.setZaalpersoneel((Zaalpersoneel) zaalpersoneel.get());
