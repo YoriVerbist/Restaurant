@@ -27,10 +27,19 @@
                 <td th:text="${bestelling.getZaalpersoneel().getNaam()}"></td>
                 <td th:text="${bestelling.getTafel().getCode()}"></td>
                 <td th:text="${bestelling.getTotaal()}"></td>
-                <td th:each="item : ${bestelling.getBesteldItems()}" th:text="${item.getGerecht().getNaam()}"></td>
+                <td>
+                    <ul th:each="item : ${bestelling.getBesteldItems()}">
+                        <li th:text="'Gerecht naam: ' + ${item.getGerecht().getNaam()}"></li>
+                        <li th:text="'Prijs: ' + ${item.getGerecht().getActuelePrijs()}"></li>
+                        <li th:text="'Aantal: ' + ${item.getAantal()}"></li>
+                    </ul>
+                </td>
             </tr>
             </tbody>
         </table>
+        <form action="/bestellingen">
+            <button type="submit" value="manage" name="action" class="btn btn-primary">Bestellingen overzicht</button>
+        </form>
     </div>
 </div>
 </body>

@@ -9,29 +9,11 @@
 <div class="container jumbotron">
 
 
-<p>
 
-</p>
-<form action="/start">
-
-    <p>
-        <input type="submit" value="singletontest" name="singletontest"/>
-    </p>
-    <p>
-        <input type="submit" value="observertest" name="observertest"/>
-    </p>
-    <p>
-        <input type="submit" value="strategytest" name="strategytest"/>
-    </p>
-    <p>
-        <input type="submit" value="decoratortest" name="decoratortest"/>
-    </p>
-
-</form>
 <div th:if="${loaded}==null">
     <form action="/">
         <p >
-            <input type="submit" name="opvullen" id="opvullen" value="opvullen">
+            <input type="submit" name="opvullen" id="opvullen" value="opvullen" class="btn btn-primary">
         </p>
     </form>
 </div>
@@ -39,11 +21,11 @@
 <div th:if="${loaded}">
     <p th:text="${gegevens}"></p>
     <form action="/personeel">
-        <button type="submit" value="manage" name="action">Personeel beheren</button>
+        <button type="submit" value="manage" name="action" class="btn btn-primary">Personeel beheren</button>
     </form>
 
     <form action="/bestellingen">
-        <button type="submit" value="manage" name="action">Bestellingen beheren</button>
+        <button type="submit" value="manage" name="action" class="btn btn-primary">Bestellingen beheren</button>
     </form>
 
 

@@ -14,11 +14,6 @@ import java.util.GregorianCalendar;
 @Controller
 public class MainController {
 
-    @RequestMapping(value = "/", method = RequestMethod.POST)
-    public String opvullen(Model model, HttpServletRequest request) {
-
-        return "index";
-    }
 //
 //    @RequestMapping("/start")
 //    public String starten(Model model, HttpServletRequest request) {

@@ -8,5 +8,4 @@ import java.util.List;
 
 @Repository
 public interface BesteldItemRepository extends JpaRepository<BesteldItem, Long> {
-    List<BesteldItem> findAllByGerechtIsLike(String naam);
 }

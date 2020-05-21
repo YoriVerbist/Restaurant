@@ -91,17 +91,6 @@ public class Bestelling {
         this.zaalpersoneel = zaalpersoneel;
     }
 
-    public String deftigeDatum(int methode) {
-        String date = "";
-        if (methode == 1) {
-            date = datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH) + "-" + datum.get(GregorianCalendar.YEAR);
-        }
-        else {
-            date = datum.get(GregorianCalendar.YEAR) + "-" + datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH);
-        }
-        return date;
-    }
-
     public void addItem(Gerecht gerecht, int aantal) {
         BesteldItem item = new BesteldItem();
         item.setGerecht(gerecht);
