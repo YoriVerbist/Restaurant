@@ -1,5 +1,6 @@
 package fact.it.restaurantapp.controller;
 
+import fact.it.restaurantapp.model.BesteldItem;
 import fact.it.restaurantapp.model.Bestelling;
 import fact.it.restaurantapp.repository.BestellingRepository;
 import org.springframework.stereotype.Controller;
@@ -8,7 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Controller
 public class BestellingController {
@@ -26,25 +30,52 @@ public class BestellingController {
     }
 
     @RequestMapping(value = "/zoeken", method = RequestMethod.GET)
-    public String zoeken() {
+    public String zoeken(HttpServletRequest request, Model model) {
+        List<Bestelling> bestellings = bestellingRepository.findAll();
+        model.addAttribute("bestellingList", bestellings);
         return "bestelling/zoeken";
     }
 
-//    @RequestMapping(value = "/zoekenIndex", method = RequestMethod.POST)
-//    public String zoekenIndex(HttpServletRequest request, Model model) {
-//        String code = request.getParameter("tafel");
-//        String date = request.getParameter("datum");
-//        String total = request.getParameter("totaal");
-//
-//        if (code != null) {
-//            List<Bestelling> bestellings = bestellingRepository.findAllByTafelCodeIsLike(code);
-//        }
-//        else if (date != null) {
-//            List<Bestelling> bestellings = bestellingRepository.findAllByDatumContaining(date);
-//        }
-//        else if (total != null) {
-//            List<Bestelling> bestellings = bestellingRepository.findAllByTotaalEquals(Double.parseDouble(total));
-//        }
-//        return "bestellingen/index";
-//    }
+    @RequestMapping(value = "/zoekenIndex", method = RequestMethod.POST)
+    public String zoekenIndex(HttpServletRequest request, Model model) {
+        String code = request.getParameter("tafel");
+        String totaal = request.getParameter("totaal");
+        List<Bestelling> bestellingList = new ArrayList<>();
+
+        if (code != null) {
+            bestellingList = this.bestellingRepository.findAllByTafelCodeIsLike(code);
+            model.addAttribute("bestellingList", bestellingList);
+        }
+        if (request.getParameter("datum").length() > 0) {
+            String date = request.getParameter("datum");
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:ms");
+            try {
+                String dateString = date+" 00:00:00:00";
+                Date parsedDate = dateFormat.parse(dateString);
+                GregorianCalendar startDate = (GregorianCalendar) GregorianCalendar.getInstance();
+                startDate.setTime(parsedDate);
+                GregorianCalendar endDate = (GregorianCalendar) GregorianCalendar.getInstance();
+                endDate.setTime(parsedDate);
+                endDate.add(Calendar.DAY_OF_MONTH, 1);
+                System.out.println(startDate.getTime());
+                System.out.println(endDate.getTime());
+
+                bestellingList = this.bestellingRepository.findAllByDatumBetween(startDate, endDate);
+                model.addAttribute("bestellingList", bestellingList);
+            } catch (ParseException e) {
+                return "/bestelling/index";
+            }
+        }
+        if (totaal != null) {
+            List<Bestelling> bestellings = bestellingRepository.findAll();
+            for (Bestelling bestelling : bestellings) {
+                double totaalParsed = Double.parseDouble(totaal);
+                if (bestelling.getTotaal() == totaalParsed) {
+                    bestellingList.add(bestelling);
+                }
+            }
+            model.addAttribute("bestellingList", bestellingList);
+        }
+        return "/bestelling/index";
+    }
 }

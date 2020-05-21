@@ -47,7 +47,7 @@ public class StartController {
             personeelRepository.save(keukenpersoneel);
 
             Tafel tafel = new Tafel();
-            tafel.setCode("" + i);
+            tafel.setCode("Tafel" + i);
             tafelRepository.save(tafel);
 
             Gerecht gerecht = new Gerecht();

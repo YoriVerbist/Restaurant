@@ -12,7 +12,6 @@ public interface BestellingRepository extends JpaRepository<Bestelling, Long> {
 
     List<Bestelling> findAllByTafelCodeIsLike(String code);
     List<Bestelling> findAllByDatumBetween(GregorianCalendar start, GregorianCalendar end);
-    //List<Bestelling> findAllByDatumContaining(String date);
     //List<Bestelling> findAllByTotaalEquals(double code);
 
 }

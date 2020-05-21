@@ -1,6 +1,7 @@
 package fact.it.restaurantapp.model;
 
 import javax.persistence.*;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -46,6 +47,10 @@ public class Bestelling {
         this.datum = datum;
     }
 
+    public void setDatum(int day, int month, int year) {
+        this.datum = new GregorianCalendar(year, month, day);
+    }
+
     public boolean isBetaald() {
         return betaald;
     }
@@ -86,9 +91,15 @@ public class Bestelling {
         this.zaalpersoneel = zaalpersoneel;
     }
 
-    public String deftigeDatum() {
-        String string = datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH) + "-" + datum.get(GregorianCalendar.YEAR);
-        return string;
+    public String deftigeDatum(int methode) {
+        String date = "";
+        if (methode == 1) {
+            date = datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH) + "-" + datum.get(GregorianCalendar.YEAR);
+        }
+        else {
+            date = datum.get(GregorianCalendar.YEAR) + "-" + datum.get(GregorianCalendar.DAY_OF_MONTH) + "-" + datum.get(GregorianCalendar.MONTH);
+        }
+        return date;
     }
 
     public void addItem(Gerecht gerecht, int aantal) {

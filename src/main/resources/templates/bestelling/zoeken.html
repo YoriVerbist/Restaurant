@@ -8,18 +8,21 @@
 </head>
 <body>
 <div class="container jumbotron">
-    <form action="/zoekenIndex">
+    <form action="/zoekenIndex" method="post">
             <div class="form-group">
                 <label for="tafel">Tafel:</label>
-                <input type="number" min="0" class="form-control" id="tafel">
+                <select class="form-control" id="tafel" name="tafel">
+                    <option value=""></option>
+                    <option th:each="bestelling: ${bestellingList}" th:text="${bestelling.getTafel().getCode()}"></option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="datum">Datum:</label>
-                <input type="date" class="form-control" id="datum">
+                <input type="date" class="form-control" id="datum" name="datum">
             </div>
             <div class="form-group">
                 <label for="totaal">Totaal bedrag:</label>
-                <input type="number" min="0" class="form-control" id="totaal">
+                <input type="number" step="0.1" min="0" class="form-control" id="totaal" name="totaal">
             </div>
             <button type="submit" class="btn btn-primary">Zoeken</button>
         </form>
