@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <title>Title</title>
 </head>
 <body>
@@ -13,28 +14,23 @@
             <tr>
                 <th scope="col">Datum</th>
                 <th scope="col">Betaald</th>
-                <th scope="col">Naam verantwoordelijke</th>
-                <th scope="col">Code tafel</th>
+                <th scope="col">Verantwoordelijke</th>
+                <th scope="col">Tafel</th>
                 <th scope="col">Totaal</th>
-                <th scope="col">Details</th>
+                <th scope="col">Bestelde Items</th>
             </tr>
             </thead>
             <tbody>
-            <tr th:each="bestelling: ${bestellingList}">
+            <tr>
                 <td th:text="${bestelling.getDatum().getTime()}"></td>
                 <td th:text="${bestelling.isBetaald()}"></td>
                 <td th:text="${bestelling.getZaalpersoneel().getNaam()}"></td>
                 <td th:text="${bestelling.getTafel().getCode()}"></td>
                 <td th:text="${bestelling.getTotaal()}"></td>
-                <td><a th:href="@{/bestelling/detail(id=${bestelling.getId()})}">Details van bestelling</a></td>
+                <td th:each="item : ${bestelling.getBesteldItems()}" th:text="${item.getGerecht().getNaam()}"></td>
             </tr>
             </tbody>
         </table>
-    </div>
-    <div>
-        <form action="/zoeken" method="get">
-            <button type="submit" class="btn btn-primary">Zoeken</button>
-        </form>
     </div>
 </div>
 </body>

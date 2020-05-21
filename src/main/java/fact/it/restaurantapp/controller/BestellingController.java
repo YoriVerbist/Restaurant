@@ -38,12 +38,12 @@ public class BestellingController {
 
     @RequestMapping(value = "/zoekenIndex", method = RequestMethod.POST)
     public String zoekenIndex(HttpServletRequest request, Model model) {
-        String code = request.getParameter("tafel");
+        String tafel = request.getParameter("tafel");
         String totaal = request.getParameter("totaal");
         List<Bestelling> bestellingList = new ArrayList<>();
 
-        if (code != null) {
-            bestellingList = this.bestellingRepository.findAllByTafelCodeIsLike(code);
+        if (tafel != null) {
+            bestellingList = this.bestellingRepository.findAllByTafelCodeIsLike(tafel);
             model.addAttribute("bestellingList", bestellingList);
         }
         if (request.getParameter("datum").length() > 0) {
@@ -66,7 +66,7 @@ public class BestellingController {
                 return "/bestelling/index";
             }
         }
-        if (totaal != null) {
+        if (totaal.length() > 0) {
             List<Bestelling> bestellings = bestellingRepository.findAll();
             for (Bestelling bestelling : bestellings) {
                 double totaalParsed = Double.parseDouble(totaal);
@@ -75,6 +75,17 @@ public class BestellingController {
                 }
             }
             model.addAttribute("bestellingList", bestellingList);
+        }
+        return "/bestelling/index";
+    }
+
+    @RequestMapping(value = "/bestelling/detail", method = RequestMethod.GET)
+    public String detailPagina(HttpServletRequest request, Model model) {
+        Long id = Long.parseLong(request.getParameter("id"));
+        if (bestellingRepository.existsById(id)) {
+            Optional<Bestelling> bestelling = this.bestellingRepository.findById(id);
+            model.addAttribute("bestelling", bestelling.get());
+            return "/bestelling/detail";
         }
         return "/bestelling/index";
     }

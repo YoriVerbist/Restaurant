@@ -13,7 +13,7 @@
                 <label for="tafel">Tafel:</label>
                 <select class="form-control" id="tafel" name="tafel">
                     <option value=""></option>
-                    <option th:each="bestelling: ${bestellingList}" th:text="${bestelling.getTafel().getCode()}"></option>
+                    <option th:each="bestelling: ${bestellingList}" th:text="${bestelling.getTafel().getCode()}" th:value="${bestelling.getTafel().getCode()}"></option>
                 </select>
             </div>
             <div class="form-group">
