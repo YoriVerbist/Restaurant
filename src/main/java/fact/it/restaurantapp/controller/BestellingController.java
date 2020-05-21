@@ -1,12 +1,12 @@
 package fact.it.restaurantapp.controller;
 
-import fact.it.restaurantapp.model.BesteldItem;
-import fact.it.restaurantapp.model.Bestelling;
-import fact.it.restaurantapp.repository.BestellingRepository;
+import fact.it.restaurantapp.model.*;
+import fact.it.restaurantapp.repository.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.DateFormat;
@@ -17,14 +17,26 @@ import java.util.*;
 @Controller
 public class BestellingController {
     private BestellingRepository bestellingRepository;
+    private PersoneelRepository personeelRepository;
+    private GerechtRepository gerechtRepository;
+    private TafelRepository tafelRepository;
+    private BesteldItemRepository besteldItemRepository;
 
-    public BestellingController(BestellingRepository bestellingRepository) {
+    private Map<BesteldItem, Integer> items = new LinkedHashMap<>();
+
+
+    public BestellingController(PersoneelRepository personeelRepository, BesteldItemRepository besteldItemRepository, GerechtRepository gerechtRepository, BestellingRepository bestellingRepository, TafelRepository tafelRepository) {
+        this.personeelRepository = personeelRepository;
+        this.gerechtRepository = gerechtRepository;
         this.bestellingRepository = bestellingRepository;
+        this.tafelRepository = tafelRepository;
+        this.besteldItemRepository = besteldItemRepository;
     }
 
     @RequestMapping(value = "/bestellingen", method = RequestMethod.GET)
     public String bestellingenWeergeven(HttpServletRequest request, Model model) {
         List<Bestelling> bestellings = bestellingRepository.findAll();
+        items.clear();
         model.addAttribute("bestellingList", bestellings);
         return "bestelling/index";
     }
@@ -50,7 +62,7 @@ public class BestellingController {
             String date = request.getParameter("datum");
             DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:ms");
             try {
-                String dateString = date+" 00:00:00:00";
+                String dateString = date + " 00:00:00:00";
                 Date parsedDate = dateFormat.parse(dateString);
                 GregorianCalendar startDate = (GregorianCalendar) GregorianCalendar.getInstance();
                 startDate.setTime(parsedDate);
@@ -88,5 +100,83 @@ public class BestellingController {
             return "/bestelling/detail";
         }
         return "/bestelling/index";
+    }
+
+    @RequestMapping(value = "/bestelling/create", method = RequestMethod.GET)
+    public String paginaTonen(HttpServletRequest request, Model model) {
+        List<Bestelling> bestellingList = bestellingRepository.findAll();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        GregorianCalendar now = (GregorianCalendar) GregorianCalendar.getInstance();
+        String date = dateFormat.format(now.getTime());
+
+        model.addAttribute("bestellings", bestellingList);
+        model.addAttribute("items", items);
+        model.addAttribute("date", date);
+
+        return "bestelling/create";
+    }
+
+    @RequestMapping(value = "/bestelling/createBestelling", method = RequestMethod.POST)
+    public RedirectView bestellingToevoegen(HttpServletRequest request, Model model) {
+        Long id = Long.parseLong(request.getParameter("zaalpersoneel"));
+        Optional<Personeel> zaalpersoneel = personeelRepository.findById(id);
+        Long tafelNr = Long.parseLong(request.getParameter("tafel"));
+        Optional<Tafel> tafel = tafelRepository.findById(tafelNr);
+        String datum = request.getParameter("datum");
+        try {
+            Bestelling bestelling = new Bestelling();
+            bestelling.setBetaald(false);
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date parsed = dateFormat.parse(datum);
+            GregorianCalendar bestellingDatum = (GregorianCalendar) GregorianCalendar.getInstance();
+            bestellingDatum.setTime(parsed);
+            bestelling.setDatum(bestellingDatum);
+
+            if (zaalpersoneel.isPresent() && zaalpersoneel.get() instanceof Zaalpersoneel) {
+                bestelling.setZaalpersoneel((Zaalpersoneel) zaalpersoneel.get());
+            }
+            tafel.ifPresent(bestelling::setTafel);
+
+            for (Map.Entry<BesteldItem, Integer> entry : items.entrySet()) {
+                BesteldItem besteldItem = entry.getKey();
+                int methode = entry.getValue();
+                if (methode == 1) {
+                    bestelling.setBetaalStrategie(new NormaleBetaling());
+                } else {
+                    bestelling.setBetaalStrategie(new HappyHourBetaling());
+                }
+                bestelling.addItem(besteldItem.getGerecht(), besteldItem.getAantal());
+                bestellingRepository.save(bestelling);
+            }
+        } catch (Exception e) {
+            return new RedirectView("/bestellingen/");
+        }
+        return new RedirectView("/bestellingen/");
+    }
+
+    @RequestMapping(value = "/bestelling/item", method = RequestMethod.GET)
+    public String gerechtToevoegen(HttpServletRequest request, Model model) {
+        List<Gerecht> gerechtList = gerechtRepository.findAll();
+        model.addAttribute("gerechten", gerechtList);
+
+        return "bestelling/item";
+    }
+
+    @RequestMapping(value = "bestelling/item", method = RequestMethod.POST)
+    public RedirectView terugNaarCreate(HttpServletRequest request, Model model) {
+        Long id = Long.parseLong(request.getParameter("gerecht"));
+        int aantal = Integer.parseInt(request.getParameter("aantal"));
+        int methode = Integer.parseInt(request.getParameter("methode"));
+
+        Optional<Gerecht> gerecht = gerechtRepository.findById(id);
+
+        if (gerecht.isPresent()) {
+            BesteldItem besteldItem = new BesteldItem();
+            besteldItem.setGerecht(gerecht.get());
+            besteldItem.setAantal(aantal);
+            items.put(besteldItem, methode);
+        }
+        return new RedirectView("/bestelling/create");
     }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="container jumbotron">
+    <div>
+        <form action="/bestelling/createBestelling" method="post">
+            <div class="form-group">
+                <label for="zaalpersoneel">Zaalpersoneel:</label>
+                <select class="form-control" id="zaalpersoneel" name="zaalpersoneel">
+                    <option value=""></option>
+                    <option th:each="bestelling : ${bestellings}" th:text="${bestelling.getZaalpersoneel().getNaam()}" th:value="${bestelling.getZaalpersoneel().getId()}"></option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="tafel">Tafel:</label>
+                <select class="form-control" id="tafel" name="tafel">
+                    <option value=""></option>
+                    <option th:each="bestelling : ${bestellings}" th:text="${bestelling.getTafel().getCode()}" th:value="${bestelling.getTafel().getId()}"></option>
+                </select>
+            </div>
+            <div class="form-group" style="display: none">
+                <label for="datum">Datum:</label>
+                <input type="date" class="form-control" id="datum" name="datum" th:value="${date}">
+            </div>
+            <div class="form-group">
+                <a th:href="@{/bestelling/item}"><button type="button" class="btn btn-success">Gerecht toevoegen</button></a>
+            </div>
+            <ul class="list-group">
+                <li class="list-group-item" th:each="item : ${items}">
+                    <span th:text="${item.getKey().getGerecht().getNaam()} + ','"></span>
+                    <span th:text="'Aantal: ' + ${item.getKey().getAantal()} + ','"></span>
+                    <span th:text="'Soort betaling: ' + ${item.getValue()==0?'Normaal':'Happy Hour'} + ','"></span>
+                </li>
+
+            </ul>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
