@@ -82,7 +82,7 @@ public class BestellingController {
             List<Bestelling> bestellings = bestellingRepository.findAll();
             for (Bestelling bestelling : bestellings) {
                 double totaalParsed = Double.parseDouble(totaal);
-                if (bestelling.getTotaal() == totaalParsed) {
+                if (bestelling.getTotaal() >= totaalParsed) {
                     bestellingList.add(bestelling);
                 }
             }
