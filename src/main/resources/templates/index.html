@@ -8,6 +8,26 @@
 <body>
 <div class="container jumbotron">
 
+<div>
+    <form action="/examen">
+        <p>
+            <input type="submit" name="examen" id="examen" value="examen opvullen" class="btn btn-primary">
+        </p>
+    </form>
+</div>
+    <div>
+        <p th:text="${gegevens1}"></p>
+    </div>
+    <div>
+        <form action="/takeaway">
+            <button type="submit" value="manage" name="action" class="btn btn-primary">nieuwe TakeAway bestelling</button>
+        </form>
+    </div>
+    <div>
+        <form action="/patterns">
+            <button type="submit" value="manage" name="action" class="btn btn-primary">test uitbereiding decorator/obsever pattern</button>
+        </form>
+    </div>
 
 
 <div th:if="${loaded}==null">
@@ -30,6 +50,16 @@
 
 
 </div>
+    <footer>
+        <div>
+            <hr>
+            <p>Naam: Verbist</p>
+            <p>Voornaam: Yori</p>
+            <p>Klas: 2ITF APP-BI A</p>
+            <p>Studentennummer: r0697651</p>
+            <hr>
+        </div>
+    </footer>
 </div>
 </body>
 </html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <title>Title</title>
+</head>
+<body>
+<div class="container jumbotron">
+    <a th:href="@{/takeaway}"><img src="/Add.gif" alt="gif"></a>
+    <div>
+        <table class="table table-dark">
+            <thead>
+            <tr>
+                <th scope="col">Verantwoordelijke</th>
+                <th scope="col">Datum</th>
+                <th scope="col">Aantal</th>
+                <th scope="col">Gerecht</th>
+                <th scope="col">Totaalprijs</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="bestelling: ${bestellingen}">
+                <td th:text="${bestelling.getKeukenpersoneel().getNaam()}"></td>
+                <td th:text="${bestelling.getDatum().getTime().toGMTString()}"></td>
+                <td th:text="${bestelling.getAantalPersonen()}"></td>
+                <td th:text="${bestelling.getGerecht().getNaam()}"></td>
+                <td th:text="${bestelling.getGerecht().getActuelePrijs()} * ${bestelling.getAantalPersonen()} + '€'"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+<footer>
+    <div>
+        <hr>
+        <p>Naam: Verbist</p>
+        <p>Voornaam: Yori</p>
+        <p>Klas: 2ITF APP-BI A</p>
+        <p>Studentennummer: r0697651</p>
+        <hr>
+    </div>
+</footer>
+</body>
+</html>

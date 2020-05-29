@@ -324,6 +324,112 @@ class RestaurantAppApplicationTests {
         System.setOut(defaultSO);
 
     }
+     @Test
+    public void k_testStrategyPatternMetBetaalStrategie_examen(){
+        TooGoodToGoBetaling tgtgBetaling = new TooGoodToGoBetaling();
+        NormaleBetaling normaleBetaling = new NormaleBetaling();
+        //gerechten aanmaken
+        Gerecht videe = new Gerecht();
+        videe.setNaam("Vidée met frietjes");
+        videe.setActuelePrijs(15.0);
+        Gerecht croque = new Gerecht();
+        //maak TakeAwayBestelling
+        TakeAwayBestelling takeAwayBestelling = new TakeAwayBestelling();
+        //TOOGOODTOGO
+        takeAwayBestelling.setBetaalStrategie(tgtgBetaling);
+        takeAwayBestelling.setGerecht(videe);
+        takeAwayBestelling.setAantalPersonen(5);
+        assertEquals(37.5,takeAwayBestelling.getTotaal(),0.1);
+        //NORMAAL
+        takeAwayBestelling.setBetaalStrategie(normaleBetaling);
+        takeAwayBestelling.setGerecht(videe);
+        takeAwayBestelling.setAantalPersonen(5);
+
+        assertEquals(75,takeAwayBestelling.getTotaal(),0.1);
+    }
+
+    @Test
+    public void l_testStrategyPatternMetBetaalStrategie_examen(){
+        TooGoodToGoBetaling tgtgBetaling = new TooGoodToGoBetaling();
+        HappyHourBetaling happyHourBetaling = new HappyHourBetaling();
+        //gerechten aanmaken
+        Gerecht videe = new Gerecht();
+        videe.setNaam("Vidée met frietjes");
+        videe.setActuelePrijs(15.0);
+        Gerecht croque = new Gerecht();
+        //maak TakeAwayBestelling
+        TakeAwayBestelling takeAwayBestelling = new TakeAwayBestelling();
+        //TOOGOODTOGO
+        takeAwayBestelling.setBetaalStrategie(happyHourBetaling);
+        takeAwayBestelling.setGerecht(videe);
+        takeAwayBestelling.setAantalPersonen(5);
+        assertEquals(60.0,takeAwayBestelling.getTotaal(),0.1);
+        //NORMAAL
+        takeAwayBestelling.setBetaalStrategie(tgtgBetaling);
+        takeAwayBestelling.setGerecht(videe);
+        takeAwayBestelling.setAantalPersonen(5);
+
+        assertEquals(37.5,takeAwayBestelling.getTotaal(),0.1);
+    }
+    @Test
+    public void m_testObserverPattern_Afhaalverantwoordelijke_examen(){
+        IngangTeller ingangTeller = IngangTeller.getInstance();
+        ingangTeller.getObservers().clear();
+        // een nieuw keukenpersoneelslid toevoegen
+        Keukenpersoneel tommy = new Keukenpersoneel();
+        tommy.setNaam("KeukenTommy");
+        //we geven hem extra afhaal-verantwoordelijkheid
+        AfhaalVerantwoordelijke afhaalverantwoordelijke = new AfhaalVerantwoordelijke();
+        afhaalverantwoordelijke.setPersoneel(tommy);
+        ingangTeller.attachObserver(afhaalverantwoordelijke);
+
+        PrintStream defaultSO = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String result;
+        System.setOut(new PrintStream(baos));
+        try {
+            //1 klant komen binnen
+            ingangTeller.setAantal(1);
+            BufferedReader br = new BufferedReader(new StringReader(baos.toString()));
+            result = br.readLine();
+            assertEquals("AfhaalVerantwoordelijke KeukenTommy heet de klant welkom en vraagt het bestelnummer op", result);
+            br.close();
+        } catch (Exception e) {
+            System.setOut(defaultSO);
+            System.out.println("Error while redirection System.out");
+        }
+        System.setOut(defaultSO);
+
+    }
+    @Test
+    public void n_testDecoratorPattern_Afhaalverantwoordelijke_examen(){
+        IngangTeller ingangTeller = IngangTeller.getInstance();
+        ingangTeller.getObservers().clear();
+        // een nieuw keukenpersoneelslid toevoegen
+        Keukenpersoneel tommy = new Keukenpersoneel();
+        tommy.setNaam("KeukenTommy");
+        //we geven hem een extra taak
+        AfhaalVerantwoordelijke afhaalverantwoordelijke = new AfhaalVerantwoordelijke();
+        afhaalverantwoordelijke.setPersoneel(tommy);
+
+        PrintStream defaultSO = System.out;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        String result;
+        System.setOut(new PrintStream(baos));
+        try {
+            //7 klanten komen binnen
+            afhaalverantwoordelijke.leverBestellingAf();
+            BufferedReader br = new BufferedReader(new StringReader(baos.toString()));
+            result = br.readLine();
+            assertEquals("AfhaalVerantwoordelijke KeukenTommy geeft de bestelling door aan de klant", result);
+            br.close();
+        } catch (Exception e) {
+            System.setOut(defaultSO);
+            System.out.println("Error while redirection System.out");
+        }
+        System.setOut(defaultSO);
+
+    }
 
 
 

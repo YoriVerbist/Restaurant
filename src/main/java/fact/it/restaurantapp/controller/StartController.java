@@ -36,6 +36,22 @@ public class StartController {
         return "index";
     }
 
+    @RequestMapping("/examen")
+    public String opvullenExamen(Model model, HttpServletRequest request) {
+        for (int i = 0; i < 5; i++) {
+            Keukenpersoneel keukenpersoneel = new Keukenpersoneel();
+            keukenpersoneel.setNaam("Keukenpersoneel" + i);
+            personeelRepository.save(keukenpersoneel);
+
+            Gerecht gerecht = new Gerecht();
+            gerecht.setNaam("Gerecht" + i);
+            gerecht.setActuelePrijs(Math.pow(i, 2));
+            gerechtRepository.save(gerecht);
+        }
+        model.addAttribute("gegevens1", "De database is opgevuld!");
+        return "index";
+    }
+
     private void dbOpvullen() {
         for (int i = 0; i < 10; i++) {
             Zaalpersoneel zaalpersoneel = new Zaalpersoneel();
@@ -62,5 +78,21 @@ public class StartController {
             bestelling.addItem(gerecht, 1);
             bestellingRepository.save(bestelling);
         }
+    }
+
+    @RequestMapping("/patterns")
+    public String patternTesten(HttpServletRequest request, Model model) {
+        IngangTeller ingangTeller = IngangTeller.getInstance();
+        ingangTeller.getObservers().clear();
+
+        AfhaalVerantwoordelijke afhaalVerantwoordelijke = new AfhaalVerantwoordelijke();
+        Zaalpersoneel zaalpersoneel = new Zaalpersoneel();
+        zaalpersoneel.setNaam("Tommy");
+        afhaalVerantwoordelijke.setPersoneel(zaalpersoneel);
+
+        afhaalVerantwoordelijke.update();
+        afhaalVerantwoordelijke.leverBestellingAf();
+
+        return "index";
     }
 }
